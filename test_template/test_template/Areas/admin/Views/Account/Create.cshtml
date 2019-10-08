@@ -1,0 +1,113 @@
+﻿@model test_template.Models.entity.Account
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/admin/Views/Shared/_layout.cshtml";
+}
+<div id="page-wrapper">
+
+    @using (Html.BeginForm("Create", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div style="margin:0 auto;overflow:hidden;width:750px;">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="caption">
+                        Tạo tài khoản mới
+                    </div>
+                    <div class="caption"><h6><i>Vui lòng điền đầy đủ thông tin vào bảng dưới đây</i></h6></div>
+                    <hr />
+
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">account_circle</i>
+                                @Html.TextBoxFor(model => model.Fullname, new { @id = "icon_prefix", @class = "validate" })
+                                @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                                <label for="icon_prefix">Họ và tên</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">phone</i>
+                                @Html.TextBoxFor(model => model.PhoneNumber, new { @id = "icon_telephone", @class = "validate" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                <label for="icon_telephone">Số điện thoại</label>
+                            </div>
+                            <div class="input-field col s12">
+                                @Html.TextBoxFor(model => model.Email, new { @id = "email", @class = "validate", @type = "email" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                <label for="email" data-error="wrong" data-success="right">Email</label>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2", @style = "color:#9e9e9e" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.RadioButtonFor(model => model.Sex, "Male", new { @class = "radio-inline", @checked = "checked" }) Male
+                                    @Html.RadioButtonFor(model => model.Sex, "Female", new { @class = "radio-inline" }) Female
+                                    @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="input-field col s12">
+                                @Html.TextBoxFor(model => model.Address, new { @id = "Address", @class = "validate" })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                <label for="Address">Địa chỉ</label>
+                            </div>
+                            <div class="input-field col s6">
+                                @Html.TextBoxFor(model => model.Username, new { @id = "username", @class = "validate", @pattern = "[a-zA-Z1-9]{1,15}" })
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                                <label for="username">Tên đăng nhập</label>
+                                <script type="text/javascript">
+                                    var input = $(document).getElementById("username");
+                                    input.oninvalid = function (event) {
+                                        event.target.setCustomValidity('Nhập tên không dấu và không có khoảng trống');
+                                    }
+                                </script>
+                            </div>
+                            <div class="input-field col s6">
+                                @Html.PasswordFor(model => model.Password, new { @id = "pass", @class = "validate" })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                <label for="pass">Mật khẩu</label>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Permission, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.RadioButtonFor(model => model.Permission, "Khách hàng", new { @class = "radio-inline", @checked = "checked" }) Khách hàng
+                                    @Html.RadioButtonFor(model => model.Permission, "Quản trị", new { @class = "radio-inline" }) Quản trị
+                                    @Html.ValidationMessageFor(model => model.Permission, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.RadioButtonFor(model => model.Active, "Kích hoạt", new { @class = "radio-inline", @checked = "checked" }) Kích hoạt
+                                    @Html.RadioButtonFor(model => model.Active, "Vô hiệu hóa", new { @class = "radio-inline" }) Vô hiệu hóa
+                                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="reset" value="Reset" class="btn btn-default" />
+                                    <input type="submit" value="Create" class="btn btn-default" onsubmit="check()==true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearBoth"></div>
+                        <div>
+                            @Html.ActionLink("Xem danh sách tài khoản", "Index")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
